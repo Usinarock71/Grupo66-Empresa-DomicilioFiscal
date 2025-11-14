@@ -1,70 +1,79 @@
 -- =====================================================
 -- Script de datos de prueba
--- TFI: Producto → CodigoBarras (1→1 unidireccional)
+-- TFI: Empresa → DomicilioFiscal (1→1 unidireccional)
 -- =====================================================
 
-USE tpi_productos;
+USE tpi_empresas;
 
 -- Limpiar datos existentes (opcional, comentar si no se desea)
--- DELETE FROM codigo_barras;
--- DELETE FROM producto;
+-- DELETE FROM domicilio_fiscal;
+-- DELETE FROM empresa;
 
 -- =====================================================
--- Insertar productos de prueba
+-- Insertar empresas de prueba
 -- =====================================================
 
--- Producto 1: Con código de barras
-INSERT INTO producto (eliminado, nombre, marca, categoria, precio, peso) VALUES
-(FALSE, 'Laptop HP Pavilion', 'HP', 'Electrónica', 899.99, 2.5);
+-- Empresa 1: Con domicilio fiscal
+INSERT INTO empresa (eliminado, razon_social, cuit, actividad_principal, email) VALUES
+(FALSE, 'Tech Solutions S.A.', '30-12345678-9', 'Desarrollo de Software', 'contacto@techsolutions.com');
 
-SET @producto_id_1 = LAST_INSERT_ID();
+SET @empresa_id_1 = LAST_INSERT_ID();
 
-INSERT INTO codigo_barras (eliminado, tipo, valor, fecha_asignacion, observaciones, producto_id) VALUES
-(FALSE, 'EAN13', '7791234567890', '2024-01-15', 'Código EAN13 estándar', @producto_id_1);
+INSERT INTO domicilio_fiscal (eliminado, calle, numero, ciudad, provincia, codigo_postal, pais, empresa_id) VALUES
+(FALSE, 'Av. Corrientes', 1234, 'Ciudad Autónoma de Buenos Aires', 'Buenos Aires', 'C1043AAX', 'Argentina', @empresa_id_1);
 
--- Producto 2: Con código de barras
-INSERT INTO producto (eliminado, nombre, marca, categoria, precio, peso) VALUES
-(FALSE, 'Mouse Logitech MX Master', 'Logitech', 'Periféricos', 89.99, 0.141);
+-- Empresa 2: Con domicilio fiscal
+INSERT INTO empresa (eliminado, razon_social, cuit, actividad_principal, email) VALUES
+(FALSE, 'Comercializadora del Norte S.R.L.', '30-87654321-0', 'Comercio Mayorista', 'ventas@comercializadora.com');
 
-SET @producto_id_2 = LAST_INSERT_ID();
+SET @empresa_id_2 = LAST_INSERT_ID();
 
-INSERT INTO codigo_barras (eliminado, tipo, valor, fecha_asignacion, observaciones, producto_id) VALUES
-(FALSE, 'UPC', '012345678905', '2024-02-20', 'Código UPC', @producto_id_2);
+INSERT INTO domicilio_fiscal (eliminado, calle, numero, ciudad, provincia, codigo_postal, pais, empresa_id) VALUES
+(FALSE, 'Av. Libertador', 5678, 'San Salvador de Jujuy', 'Jujuy', 'Y4600', 'Argentina', @empresa_id_2);
 
--- Producto 3: Con código de barras
-INSERT INTO producto (eliminado, nombre, marca, categoria, precio, peso) VALUES
-(FALSE, 'Teclado Mecánico RGB', 'Corsair', 'Periféricos', 149.99, 1.2);
+-- Empresa 3: Con domicilio fiscal
+INSERT INTO empresa (eliminado, razon_social, cuit, actividad_principal, email) VALUES
+(FALSE, 'Servicios Informáticos Integrales S.A.', '30-11223344-5', 'Consultoría IT', 'info@serviciosit.com');
 
-SET @producto_id_3 = LAST_INSERT_ID();
+SET @empresa_id_3 = LAST_INSERT_ID();
 
-INSERT INTO codigo_barras (eliminado, tipo, valor, fecha_asignacion, observaciones, producto_id) VALUES
-(FALSE, 'EAN8', '12345670', '2024-03-10', NULL, @producto_id_3);
+INSERT INTO domicilio_fiscal (eliminado, calle, numero, ciudad, provincia, codigo_postal, pais, empresa_id) VALUES
+(FALSE, 'Calle San Martín', 890, 'Córdoba', 'Córdoba', 'X5000', 'Argentina', @empresa_id_3);
 
--- Producto 4: Sin código de barras (para probar relación opcional)
-INSERT INTO producto (eliminado, nombre, marca, categoria, precio, peso) VALUES
-(FALSE, 'Monitor Samsung 27"', 'Samsung', 'Electrónica', 299.99, 5.8);
+-- Empresa 4: Sin domicilio fiscal (para probar relación opcional)
+INSERT INTO empresa (eliminado, razon_social, cuit, actividad_principal, email) VALUES
+(FALSE, 'Distribuidora de Productos S.R.L.', '30-99887766-1', 'Distribución', 'distribuidora@email.com');
 
--- Producto 5: Con código de barras
-INSERT INTO producto (eliminado, nombre, marca, categoria, precio, peso) VALUES
-(FALSE, 'Auriculares Sony WH-1000XM4', 'Sony', 'Audio', 349.99, 0.254);
+-- Empresa 5: Con domicilio fiscal
+INSERT INTO empresa (eliminado, razon_social, cuit, actividad_principal, email) VALUES
+(FALSE, 'Empresa de Logística Express S.A.', '30-55667788-2', 'Logística y Transporte', 'logistica@express.com');
 
-SET @producto_id_5 = LAST_INSERT_ID();
+SET @empresa_id_5 = LAST_INSERT_ID();
 
-INSERT INTO codigo_barras (eliminado, tipo, valor, fecha_asignacion, observaciones, producto_id) VALUES
-(FALSE, 'EAN13', '4905524901234', '2024-05-12', 'Código EAN13 internacional', @producto_id_5);
+INSERT INTO domicilio_fiscal (eliminado, calle, numero, ciudad, provincia, codigo_postal, pais, empresa_id) VALUES
+(FALSE, 'Ruta Nacional 9', 1500, 'Rosario', 'Santa Fe', 'S2000', 'Argentina', @empresa_id_5);
 
 -- =====================================================
 -- Verificar datos insertados
 -- =====================================================
 
-SELECT 'Productos insertados:' AS '';
-SELECT COUNT(*) AS total_productos FROM producto WHERE eliminado = FALSE;
+SELECT 'Empresas insertadas:' AS '';
+SELECT COUNT(*) AS total_empresas FROM empresa WHERE eliminado = FALSE;
 
-SELECT 'Códigos de barras insertados:' AS '';
-SELECT COUNT(*) AS total_codigos FROM codigo_barras WHERE eliminado = FALSE;
+SELECT 'Domicilios fiscales insertados:' AS '';
+SELECT COUNT(*) AS total_domicilios FROM domicilio_fiscal WHERE eliminado = FALSE;
 
-SELECT 'Productos con código de barras:' AS '';
-SELECT p.id, p.nombre, p.precio, c.id AS codigo_id, c.tipo, c.valor 
-FROM producto p 
-LEFT JOIN codigo_barras c ON p.id = c.producto_id 
-WHERE p.eliminado = FALSE;
+SELECT 'Empresas con domicilio fiscal:' AS '';
+SELECT 
+    e.id, 
+    e.razon_social, 
+    e.cuit, 
+    e.actividad_principal,
+    d.id AS domicilio_id, 
+    d.calle, 
+    d.numero, 
+    d.ciudad, 
+    d.provincia 
+FROM empresa e 
+LEFT JOIN domicilio_fiscal d ON e.id = d.empresa_id 
+WHERE e.eliminado = FALSE;
