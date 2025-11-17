@@ -291,14 +291,14 @@ Todos los errores se muestran con mensajes claros al usuario.
 
 ### Video
 
-[Enlace al video de presentación - agregar aquí]
+https://drive.google.com/file/d/1oS9Nx22xFaEM4fFwVojaLOfTW6xKJxe6/view?usp=drive_link
 
 ### Integrantes
 
 - **Integrante 1**: Brian Gamarra
-- **Integrante 2**: [Nombre]
-- **Integrante 3**: [Nombre]
-- **Integrante 4**: [Nombre]
+- **Integrante 2**: Tiziano Nahuel Caamaño
+- **Integrante 3**: Lorenzo Blanco
+- **Integrante 4**: Kenyi Alejandro Meza Andagua
 
 ### Licencia
 
